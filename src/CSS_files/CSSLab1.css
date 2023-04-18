@@ -1,0 +1,67 @@
+body{
+    background-color: white;
+    
+}
+#head{
+    border-bottom: 5px solid #000000; 
+   padding: auto;
+    height: 100px;
+    display: block;
+}
+a{
+    
+    text-decoration: none;
+    color: #000000;
+}
+#head img{
+    width: 70px;
+    height: 70px;
+}
+#head p{
+margin-left: 50px;
+margin-top: 10px;
+ float: left;
+ font-weight:400;
+font-size: 40px;
+font-family:'Times New Roman', Times, serif;
+}
+#head li{
+    float: right;
+    margin: 40px ;
+    font-weight:400;
+    font-size: 25px;
+    font-family:'Times New Roman', Times, serif;
+    display: inline;
+}
+#center{
+ margin-top: 100px;
+    float:center;
+}
+.bottom{
+    background-color: rgb(171, 75, 75);
+    height: 100px;
+    width: 100%;
+   
+}
+.bottom p{
+   margin-left: 550px;
+   margin-top: 10px;
+    font-size: 20px;
+}
+/* анимация технических работ */
+.animation img {
+    width: 200px;
+margin-left: 250px;
+    animation-name: working; 
+    animation-duration: 3s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+    }
+    @keyframes working { 
+        0% {transform:rotate(0deg);} 
+        100% {transform:rotate(360deg);} 
+        }
+        .animation p{
+            font-size: 20px;
+            font-weight: 600;
+        }
