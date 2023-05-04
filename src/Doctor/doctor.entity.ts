@@ -5,8 +5,10 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Record } from 'src/Record/record.entity';
 @Entity('doctors') //указываем что это не просто клаcс, а сущность в рамках TypeOrm, в БД будет храниться как таблица
 export class Doctor {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
@@ -36,4 +38,6 @@ export class Doctor {
     inverseJoinColumn: { name: 'clinic_id' },
   })
   clinicid: Clinic[];
+  @OneToMany(() => Record, (record) => record.recordingid)
+  recordingid: Record[];
 }

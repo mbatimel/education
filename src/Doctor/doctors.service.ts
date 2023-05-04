@@ -6,6 +6,7 @@ import { Clinic } from '../Clinic/clinic.entiti';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDcotorDto } from './dto/DoctorDTO';
+import { Record } from 'src/Record/record.entity';
 
 @Injectable()
 export class DoctorsServise {
@@ -16,6 +17,8 @@ export class DoctorsServise {
     private readonly clientRepository: Repository<Client>,
     @InjectRepository(Clinic)
     private readonly clinicRepository: Repository<Clinic>,
+    @InjectRepository(Record)
+    private readonly recordRepository: Repository<Record>,
   ) {}
   //CRUD.
   findOne(office: number): Promise<Doctor> {
@@ -23,6 +26,7 @@ export class DoctorsServise {
       where: { office },
       relations: {
         clinicid: true,
+        recordingid: true,
       },
     });
   }
@@ -38,6 +42,10 @@ export class DoctorsServise {
       id: In(doctorDTO.clinicid),
     });
     doctor.clinicid = clinicid;
+    const recordingid = await this.recordRepository.findBy({
+      recordingid: In(doctorDTO.recordingid),
+    });
+    doctor.recordingid = recordingid;
     await this.doctorRepository.save(doctor);
     return doctor;
   }
@@ -45,6 +53,7 @@ export class DoctorsServise {
     const doctors = await this.doctorRepository.find({
       relations: {
         clinicid: true,
+        recordingid: true,
       },
     });
     return doctors;
@@ -69,6 +78,7 @@ export class DoctorsServise {
     doctor.office = updateDuctor.office;
     doctor.info = updateDuctor.info;
     doctor.clinicid = updateDuctor.clinicid;
+    doctor.recordingid = updateDuctor.recordingid;
     await this.doctorRepository.save(doctor);
     return doctor;
   }

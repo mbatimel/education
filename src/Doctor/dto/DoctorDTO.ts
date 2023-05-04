@@ -11,4 +11,5 @@ export class CreateDcotorDto {
   post: string;
   office: number;
   clinicid: number[];
+  recordingid: number[];
 }

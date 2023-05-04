@@ -1,11 +1,5 @@
-import { Doctor } from '../Doctor/doctor.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Record } from 'src/Record/record.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('client')
 export class Client {
@@ -25,15 +19,6 @@ export class Client {
   address: string;
   @Column()
   workORstudy: string;
-  @Column()
-  dateofrecording: Date;
-  @Column()
-  timeofrecording: Date;
-  @ManyToMany(() => Doctor, (doctor) => doctor.fullname)
-  @JoinTable({
-    name: 'doctor_fullname',
-    joinColumn: { name: 'client_id' },
-    inverseJoinColumn: { name: 'doctor_id' },
-  })
-  doctor: Doctor[];
+  @OneToMany(() => Record, (record) => record.recordingid)
+  recordingid: Record[];
 }

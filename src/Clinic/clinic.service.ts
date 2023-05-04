@@ -1,10 +1,10 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { DatasourceService } from '../Datasource /datasource.service';
+import { Injectable } from '@nestjs/common';
 import { Clinic } from './clinic.entiti';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Doctor } from '../Doctor/doctor.entity';
 import { Client } from '../Client/client.entiti';
+import { CreateClinicDTO } from './dto/ClinicDTO';
 
 @Injectable()
 export class ClinisServise {
@@ -17,35 +17,32 @@ export class ClinisServise {
     private readonly clinicRepository: Repository<Clinic>,
   ) {}
   //CRUD.
-  // добавление клиники в бд.
-  // create(clinic: Clinic) {
-  //   this.datasourceService.getClinics().push(clinic);
-  //   return clinic;
-  // }
-  // //поиск клиники по адресу.
-  // findOne(FullAddress: string) {
-  //   return this.datasourceService
-  //     .getClinics()
-  //     .find((clinic) => clinic.FullAddress === FullAddress);
-  // }
-  // //возвращает всех поликлиник.
-  // findAll(): Clinic[] {
-  //   return this.datasourceService.getClinics();
-  // }
-  // //изменение данных клиники.
-  // update(id: number, updateClinic: Clinic) {
-  //   const index = this.datasourceService
-  //     .getClinics()
-  //     .findIndex((clinic) => clinic.id === id);
-  //   this.datasourceService.getClinics()[index] = updateClinic;
-  //   return this.datasourceService.getClinics()[index];
-  // }
-  // //Удаление данных клиники
-  // remove(id: number) {
-  //   const index = this.datasourceService
-  //     .getClinics()
-  //     .findIndex((clinic) => clinic.id === id);
-  //   this.datasourceService.getClinics().splice(index, 1);
-  //   return HttpStatus.OK;
-  // }
+  async create(clinicDTO: CreateClinicDTO): Promise<Clinic> {
+    const clinic = await this.clinicRepository.create();
+    clinic.FullAddress = clinicDTO.FullAddress;
+    clinic.Rating = clinicDTO.Rating;
+    clinic.phone = clinicDTO.phone;
+    clinic.HeadOf = clinicDTO.HeadOf;
+    await this.clinicRepository.save(clinic);
+    return clinic;
+  }
+  async findOne(FullAddress: string) {
+    return this.clinicRepository.findOne({ where: { FullAddress } });
+  }
+  async findAll(): Promise<Clinic[]> {
+    const clinics = await this.clinicRepository.find({});
+    return clinics;
+  }
+  async update(id: number, updateClinic: Clinic) {
+    const clinic = await this.clinicRepository.findOne({ where: { id } });
+    clinic.FullAddress = updateClinic.FullAddress;
+    clinic.HeadOf = updateClinic.HeadOf;
+    clinic.Rating = updateClinic.Rating;
+    clinic.phone = updateClinic.phone;
+    await this.clinicRepository.save(clinic);
+    return clinic;
+  }
+  async remove(id: number) {
+    await this.clinicRepository.delete({ id });
+  }
 }

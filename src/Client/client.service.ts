@@ -1,10 +1,11 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { DatasourceService } from '../Datasource /datasource.service';
+import { Injectable } from '@nestjs/common';
 import { Client } from './client.entiti';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Doctor } from '../Doctor/doctor.entity';
 import { Clinic } from '../Clinic/clinic.entiti';
+import { Record } from 'src/Record/record.entity';
+import { CreateClientDTO } from './dto/ClientDTO';
 
 @Injectable()
 export class ClientsServise {
@@ -15,37 +16,57 @@ export class ClientsServise {
     private readonly clientRepository: Repository<Client>,
     @InjectRepository(Clinic)
     private readonly clinicRepository: Repository<Clinic>,
+    @InjectRepository(Record)
+    private readonly recordRepository: Repository<Record>,
   ) {}
   //CRUD.
-  // добавление записи клиета к врасу.
-  // create(client: Client) {
-  //   this.datasourceService.getClients().push(client);
-  //   return client;
-  // }
-  // //поиск запись по дате.
-  // findOne(dateofrecording: Date) {
-  //   return this.datasourceService
-  //     .getClients()
-  //     .find((client) => client.dateofrecording === dateofrecording);
-  // }
-  // //возвращает все записи клиентов
-  // findAll(): Client[] {
-  //   return this.datasourceService.getClients();
-  // }
-  // //изменение данных записи.
-  // update(id: number, updateClient: Client) {
-  //   const index = this.datasourceService
-  //     .getClients()
-  //     .findIndex((client) => client.id === id);
-  //   this.datasourceService.getClients()[index] = updateClient;
-  //   return this.datasourceService.getClients()[index];
-  // }
-  // //Удаление записи к врачу
-  // remove(id: number) {
-  //   const index = this.datasourceService
-  //     .getClients()
-  //     .findIndex((client) => client.id === id);
-  //   this.datasourceService.getClients().splice(index, 1);
-  //   return HttpStatus.OK;
-  // }
+  findOne(id: number): Promise<Client> {
+    return this.clientRepository.findOne({
+      where: { id },
+      relations: {
+        recordingid: true,
+      },
+    });
+  }
+  async create(clientDTO: CreateClientDTO): Promise<Client> {
+    const client = this.clientRepository.create();
+    client.Fullname = clientDTO.Fullname;
+    client.Birthday = clientDTO.Birthday;
+    client.age = clientDTO.age;
+    client.phone = clientDTO.phone;
+    client.gender = clientDTO.gender;
+    client.address = clientDTO.address;
+    client.workORstudy = clientDTO.workORstudy;
+    const recordingid = await this.recordRepository.findBy({
+      recordingid: In(clientDTO.recordingid),
+    });
+    client.recordingid = recordingid;
+    await this.doctorRepository.save(client);
+    return client;
+  }
+  async findAll(): Promise<Client[]> {
+    const clients = await this.clientRepository.find({
+      relations: {
+        recordingid: true,
+      },
+    });
+    return clients;
+  }
+  async update(id: number, updateClients: Client) {
+    const client = await this.clientRepository.findOne({ where: { id } });
+    client.Fullname = updateClients.Fullname;
+    client.Birthday = updateClients.Birthday;
+    client.age = updateClients.age;
+    client.phone = updateClients.phone;
+    client.gender = updateClients.gender;
+    client.address = updateClients.address;
+    client.workORstudy = updateClients.workORstudy;
+    client.recordingid = updateClients.recordingid;
+    await this.clientRepository.save(client);
+    return client;
+  }
+  //Удаление данных врача
+  async remove(id: number) {
+    this.clientRepository.delete({ id });
+  }
 }

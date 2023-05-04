@@ -19,6 +19,7 @@ export class DoctorsController {
   findAll() {
     return this.doctorsServise.findAll();
   }
+  @ApiOperation({ summary: 'Добавление кабинета врача' })
   @Get(':office')
   findOne(@Param('office') office: number) {
     return this.doctorsServise.findOne(+office);
