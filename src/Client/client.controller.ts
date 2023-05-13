@@ -7,9 +7,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ClientsServise } from './client.service';
-import { Client } from './client.entiti';
+import { Client } from './client.entity';
 import { CreateClientDTO } from './dto/ClientDTO';
+@ApiTags('Клиенты')
 @Controller('clients')
 export class ClientsController {
   constructor(private readonly clientsServise: ClientsServise) {}
@@ -25,6 +27,7 @@ export class ClientsController {
   update(@Param('id') id: string, @Body() updateClients: Client) {
     return this.clientsServise.update(+id, updateClients);
   }
+  @ApiOperation({ summary: 'Добавление клиента в базу клиники' })
   @Post()
   create(@Body() createClient: CreateClientDTO) {
     return this.clientsServise.create(createClient);

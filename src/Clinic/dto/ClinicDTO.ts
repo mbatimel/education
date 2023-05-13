@@ -3,4 +3,5 @@ export class CreateClinicDTO {
   Rating: number;
   phone: string;
   HeadOf: string;
+  docotorid: number[];
 }

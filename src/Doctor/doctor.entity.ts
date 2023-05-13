@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Clinic } from '../Clinic/clinic.entiti';
+import { Clinic } from '../Clinic/clinic.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Record } from 'src/Record/record.entity';
@@ -27,17 +26,18 @@ export class Doctor {
   @ApiProperty({ example: '20', description: 'Опыт работы' })
   experience: number;
   @Column({}) //колонка таблицы, сюда можно.
-  // добавить большое количество параметров для БД, например тип, уникальность, триггер и т.д.
+  @ApiProperty({ example: '222', description: 'Кабинет врача' })
   office: number;
   @Column()
+  @ApiProperty({ example: 'хороший врач', description: 'Информация о враче' })
   info: string;
-  @ManyToMany(() => Clinic, (clinic) => clinic.id)
+  @ManyToMany(() => Clinic, (clinic) => clinic.docotorid)
   @JoinTable({
     name: 'doctor_clinic',
     joinColumn: { name: 'doctor_id' },
     inverseJoinColumn: { name: 'clinic_id' },
   })
   clinicid: Clinic[];
-  @OneToMany(() => Record, (record) => record.recordingid)
+  @ManyToMany(() => Record, (record) => record.doctorid)
   recordingid: Record[];
 }

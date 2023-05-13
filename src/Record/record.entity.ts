@@ -1,13 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Client } from 'src/Client/client.entiti';
+import { Client } from 'src/Client/client.entity';
 import { Doctor } from 'src/Doctor/doctor.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('records')
 export class Record {
   @PrimaryGeneratedColumn()
@@ -17,19 +10,7 @@ export class Record {
   @Column()
   timeofrecording: Date;
   @ManyToOne(() => Doctor, (doctor) => doctor.recordingid)
-  @JoinTable({
-    name: 'doctor_id',
-    joinColumn: { name: 'record_id' },
-    inverseJoinColumn: { name: 'doctor_id' },
-  })
-  doctorid: Doctor;
+  doctorid: Doctor[];
   @ManyToOne(() => Client, (client) => client.recordingid)
-  @JoinTable({
-    name: 'client_id',
-    joinColumn: { name: 'record_id' },
-    inverseJoinColumn: { name: 'client_id' },
-  })
-  clientid: Client;
+  clientid: Client[];
 }
-// переписать доктора потому что в круд запросах у него выскочила ошибка во время изменении данных
-// имею в виду во время дополнения обьекта записb.

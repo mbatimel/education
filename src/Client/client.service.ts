@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Client } from './client.entiti';
+import { Client } from './client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Doctor } from '../Doctor/doctor.entity';
-import { Clinic } from '../Clinic/clinic.entiti';
 import { Record } from 'src/Record/record.entity';
 import { CreateClientDTO } from './dto/ClientDTO';
 
@@ -14,8 +13,6 @@ export class ClientsServise {
     private readonly doctorRepository: Repository<Doctor>,
     @InjectRepository(Client)
     private readonly clientRepository: Repository<Client>,
-    @InjectRepository(Clinic)
-    private readonly clinicRepository: Repository<Clinic>,
     @InjectRepository(Record)
     private readonly recordRepository: Repository<Record>,
   ) {}

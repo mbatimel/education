@@ -3,7 +3,7 @@ import { ClinisServise } from './clinic.service';
 import { ClinicsController } from './clinic.controller';
 import { DatasourceModule } from '../Datasource /datasource.module';
 import { Doctor } from '../Doctor/doctor.entity';
-import { Clinic } from './clinic.entiti';
+import { Clinic } from './clinic.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({

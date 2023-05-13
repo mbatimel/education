@@ -19,6 +19,6 @@ export class Client {
   address: string;
   @Column()
   workORstudy: string;
-  @OneToMany(() => Record, (record) => record.recordingid)
+  @OneToMany(() => Record, (record) => record.clientid)
   recordingid: Record[];
 }

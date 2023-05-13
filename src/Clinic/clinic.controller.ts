@@ -10,7 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ClinisServise } from './clinic.service';
-import { Clinic } from './clinic.entiti';
+import { Clinic } from './clinic.entity';
+import { CreateClinicDTO } from './dto/ClinicDTO';
 @Controller('clinics')
 @ApiTags('Поликлиники')
 export class ClinicsController {
@@ -29,7 +30,7 @@ export class ClinicsController {
   }
   @ApiOperation({ summary: 'Создание сетевой поликлтиники' })
   @Post()
-  create(@Body() createClinic: Clinic) {
+  create(@Body() createClinic: CreateClinicDTO) {
     return this.clinicsServise.create(createClinic);
   }
   @Delete(':id')

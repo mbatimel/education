@@ -1,20 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Doctor } from './doctor.entity';
 import { IncompleteDoctorDto } from './dto/incomplete-doctor.dto';
-import { Client } from '../Client/client.entiti';
-import { Clinic } from '../Clinic/clinic.entiti';
+import { Clinic } from '../Clinic/clinic.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateDcotorDto } from './dto/DoctorDTO';
-import { Record } from 'src/Record/record.entity';
+import { CreateDcotor } from './dto/DoctorDTO';
+import { Record } from '../Record/record.entity';
 
 @Injectable()
 export class DoctorsServise {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorRepository: Repository<Doctor>,
-    @InjectRepository(Client)
-    private readonly clientRepository: Repository<Client>,
     @InjectRepository(Clinic)
     private readonly clinicRepository: Repository<Clinic>,
     @InjectRepository(Record)
@@ -30,7 +27,7 @@ export class DoctorsServise {
       },
     });
   }
-  async create(doctorDTO: CreateDcotorDto): Promise<Doctor> {
+  async create(doctorDTO: CreateDcotor): Promise<Doctor> {
     const doctor = this.doctorRepository.create();
     doctor.fullname = doctorDTO.fullname;
     doctor.age = doctorDTO.age;

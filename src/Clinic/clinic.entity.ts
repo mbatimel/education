@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Doctor } from 'src/Doctor/doctor.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('clinic')
 export class Clinic {
@@ -27,4 +34,11 @@ export class Clinic {
   })
   @Column()
   HeadOf: string;
+  @ManyToMany(() => Doctor, (doctor) => doctor.clinicid)
+  @JoinTable({
+    name: 'doctor_clinic',
+    joinColumn: { name: 'clinic_id' },
+    inverseJoinColumn: { name: 'docotor_id' },
+  })
+  docotorid: Doctor[];
 }

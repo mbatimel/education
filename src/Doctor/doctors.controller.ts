@@ -10,7 +10,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DoctorsServise } from './doctors.service';
 import { Doctor } from './doctor.entity';
-import { CreateDcotorDto } from './dto/DoctorDTO';
+import { CreateDcotor } from './dto/DoctorDTO';
 @Controller('doctors')
 @ApiTags('Доктора')
 export class DoctorsController {
@@ -19,7 +19,7 @@ export class DoctorsController {
   findAll() {
     return this.doctorsServise.findAll();
   }
-  @ApiOperation({ summary: 'Добавление кабинета врача' })
+  @ApiOperation({ summary: 'Поиск кабинета врача' })
   @Get(':office')
   findOne(@Param('office') office: number) {
     return this.doctorsServise.findOne(+office);
@@ -30,7 +30,7 @@ export class DoctorsController {
   }
   @ApiOperation({ summary: 'Добавление врача' })
   @Post()
-  create(@Body() createDoctor: CreateDcotorDto) {
+  create(@Body() createDoctor: CreateDcotor) {
     return this.doctorsServise.create(createDoctor);
   }
   @Delete(':id')

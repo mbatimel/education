@@ -3,13 +3,15 @@ import { DoctorModel } from './Doctor/doctor.model';
 import { DatasourceModule } from './Datasource /datasource.module';
 import { ClinicModel } from './Clinic/clinic.model';
 import { ClientsModel } from './Client/client.model';
+import { RecordModel } from './Record/record.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     DoctorModel,
-    // ClinicModel,
-    // ClientsModel,
+    ClinicModel,
+    ClientsModel,
+    RecordModel,
     DatasourceModule,
     TypeOrmModule.forRoot({
       type: 'postgres', //тип подключаемой БД

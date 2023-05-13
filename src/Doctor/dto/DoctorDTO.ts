@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateDcotorDto {
+export class CreateDcotor {
   @ApiProperty({ example: 'Иванов Иван Иванович', description: 'ФИО' })
   fullname: string;
   age: number;
