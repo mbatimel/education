@@ -27,19 +27,19 @@ export class RecordService {
     });
   }
   async create(recordDTO: CreateRecordDto): Promise<Record> {
-    const record = this.recordRepository.create();
-    record.dateofrecording = recordDTO.dateofrecording;
-    record.timeofrecording = recordDTO.timeofrecording;
+    const records = this.recordRepository.create();
+    records.dateofrecording = recordDTO.dateofrecording;
+    records.timeofrecording = recordDTO.timeofrecording;
     const doctorid = await this.doctorRepository.findBy({
+      id: In(recordDTO.doctorid),
+    });
+    records.doctorid = doctorid;
+    const clientid = await this.clientRepository.findBy({
       id: In(recordDTO.clientid),
     });
-    record.doctorid = doctorid;
-    const clientid = await this.clientRepository.findBy({
-      id: In([recordDTO.clientid]),
-    });
-    record.clientid = clientid;
-    await this.recordRepository.create(record);
-    return record;
+    records.clientid = clientid;
+    this.recordRepository.create(records);
+    return records;
   }
   async findAll(): Promise<Record[]> {
     const record = await this.recordRepository.find({

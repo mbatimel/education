@@ -12,7 +12,7 @@ import { ClientsServise } from './client.service';
 import { Client } from './client.entity';
 import { CreateClientDTO } from './dto/ClientDTO';
 @ApiTags('Клиенты')
-@Controller('clients')
+@Controller('client')
 export class ClientsController {
   constructor(private readonly clientsServise: ClientsServise) {}
   @Get()

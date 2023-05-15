@@ -5,6 +5,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Record } from 'src/Record/record.entity';
@@ -38,6 +39,6 @@ export class Doctor {
     inverseJoinColumn: { name: 'clinic_id' },
   })
   clinicid: Clinic[];
-  @ManyToMany(() => Record, (record) => record.doctorid)
+  @OneToMany(() => Record, (record) => record.doctorid)
   recordingid: Record[];
 }

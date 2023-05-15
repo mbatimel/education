@@ -12,7 +12,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ClinisServise } from './clinic.service';
 import { Clinic } from './clinic.entity';
 import { CreateClinicDTO } from './dto/ClinicDTO';
-@Controller('clinics')
+@Controller('clinic')
 @ApiTags('Поликлиники')
 export class ClinicsController {
   constructor(private readonly clinicsServise: ClinisServise) {}

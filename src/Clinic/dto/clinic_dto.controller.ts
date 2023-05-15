@@ -1,6 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { ClinisServise } from '../clinic.service';
-@Controller('doctors')
+import { Controller } from '@nestjs/common';
+@Controller('clinic')
 export class ClinicsServise {
   //   constructor(private readonly clinicsServise: ClinisServise) {}
   //   @Get('incomplete')

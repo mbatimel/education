@@ -10,7 +10,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DoctorsServise } from './doctors.service';
 import { Doctor } from './doctor.entity';
-import { CreateDcotor } from './dto/DoctorDTO';
+import { CreateDcotorDto } from './dto/DoctorDTO';
 @Controller('doctors')
 @ApiTags('Доктора')
 export class DoctorsController {
@@ -30,7 +30,7 @@ export class DoctorsController {
   }
   @ApiOperation({ summary: 'Добавление врача' })
   @Post()
-  create(@Body() createDoctor: CreateDcotor) {
+  create(@Body() createDoctor: CreateDcotorDto) {
     return this.doctorsServise.create(createDoctor);
   }
   @Delete(':id')

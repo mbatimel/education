@@ -4,7 +4,7 @@ import { IncompleteDoctorDto } from './dto/incomplete-doctor.dto';
 import { Clinic } from '../Clinic/clinic.entity';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateDcotor } from './dto/DoctorDTO';
+import { CreateDcotorDto } from './dto/DoctorDTO';
 import { Record } from '../Record/record.entity';
 
 @Injectable()
@@ -27,8 +27,8 @@ export class DoctorsServise {
       },
     });
   }
-  async create(doctorDTO: CreateDcotor): Promise<Doctor> {
-    const doctor = this.doctorRepository.create();
+  async create(doctorDTO: CreateDcotorDto): Promise<Doctor> {
+    const doctor = await this.doctorRepository.create();
     doctor.fullname = doctorDTO.fullname;
     doctor.age = doctorDTO.age;
     doctor.info = doctorDTO.info;

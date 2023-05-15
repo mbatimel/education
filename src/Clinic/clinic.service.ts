@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Clinic } from './clinic.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateClinicDTO } from './dto/ClinicDTO';
+import { Doctor } from 'src/Doctor/doctor.entity';
 
 @Injectable()
 export class ClinisServise {
   constructor(
     @InjectRepository(Clinic)
     private readonly clinicRepository: Repository<Clinic>,
+    @InjectRepository(Doctor)
+    private readonly doctorRepository: Repository<Doctor>,
   ) {}
   //CRUD.
   async create(clinicDTO: CreateClinicDTO): Promise<Clinic> {
@@ -17,6 +20,10 @@ export class ClinisServise {
     clinic.Rating = clinicDTO.Rating;
     clinic.phone = clinicDTO.phone;
     clinic.HeadOf = clinicDTO.HeadOf;
+    const doctorid = await this.doctorRepository.findBy({
+      id: In(clinicDTO.docotorid),
+    });
+    clinic.docotorid = doctorid;
     await this.clinicRepository.save(clinic);
     return clinic;
   }
