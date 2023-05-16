@@ -13,4 +13,5 @@ export class Record {
   doctorid: Doctor[];
   @ManyToOne(() => Client, (client) => client.recordingid)
   clientid: Client[];
+  roles: string[];
 }

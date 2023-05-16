@@ -18,8 +18,8 @@ export class DoctorsServise {
     private readonly recordRepository: Repository<Record>,
   ) {}
   //CRUD.
-  findOne(office: number): Promise<Doctor> {
-    return this.doctorRepository.findOne({
+  async findOne(office: number): Promise<Doctor> {
+    return await this.doctorRepository.findOne({
       where: { office },
       relations: {
         clinicid: true,
@@ -81,6 +81,6 @@ export class DoctorsServise {
   }
   //Удаление данных врача
   async remove(id: number) {
-    this.doctorRepository.delete({ id });
+    await this.doctorRepository.delete({ id });
   }
 }

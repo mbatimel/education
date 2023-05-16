@@ -41,4 +41,5 @@ export class Doctor {
   clinicid: Clinic[];
   @OneToMany(() => Record, (record) => record.doctorid)
   recordingid: Record[];
+  roles: string[];
 }

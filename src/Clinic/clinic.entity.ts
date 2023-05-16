@@ -41,4 +41,5 @@ export class Clinic {
     inverseJoinColumn: { name: 'docotor_id' },
   })
   docotorid: Doctor[];
+  roles: string[];
 }

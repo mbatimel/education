@@ -5,6 +5,8 @@ import { ClinicModel } from './Clinic/clinic.model';
 import { ClientsModel } from './Client/client.model';
 import { RecordModel } from './Record/record.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './Guard/roles.guard';
 
 @Module({
   imports: [
@@ -25,6 +27,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

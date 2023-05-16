@@ -21,4 +21,5 @@ export class Client {
   workORstudy: string;
   @OneToMany(() => Record, (record) => record.clientid)
   recordingid: Record[];
+  roles: string[];
 }

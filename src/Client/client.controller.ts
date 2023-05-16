@@ -11,11 +11,14 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ClientsServise } from './client.service';
 import { Client } from './client.entity';
 import { CreateClientDTO } from './dto/ClientDTO';
+import { Roles } from 'src/Guard/role.decorator';
+import { Role } from 'src/Guard/role.enum';
 @ApiTags('Клиенты')
 @Controller('client')
 export class ClientsController {
   constructor(private readonly clientsServise: ClientsServise) {}
   @Get()
+  @Roles(Role.Admin)
   findAll() {
     return this.clientsServise.findAll();
   }
@@ -33,6 +36,7 @@ export class ClientsController {
     return this.clientsServise.create(createClient);
   }
   @Delete(':id')
+  @Roles(Role.Admin)
   remove(@Param('id') id: string) {
     return this.clientsServise.remove(+id);
   }
