@@ -66,16 +66,16 @@ export class DoctorsServise {
     });
     return incomplitedoctors;
   }
-  async update(id: number, updateDuctor: Doctor) {
+  async update(id: number, updateDoctor: Doctor) {
     const doctor = await this.doctorRepository.findOne({ where: { id } });
-    doctor.fullname = updateDuctor.fullname;
-    doctor.age = updateDuctor.age;
-    doctor.post = updateDuctor.post;
-    doctor.experience = updateDuctor.experience;
-    doctor.office = updateDuctor.office;
-    doctor.info = updateDuctor.info;
-    doctor.clinicid = updateDuctor.clinicid;
-    doctor.recordingid = updateDuctor.recordingid;
+    doctor.fullname = updateDoctor.fullname;
+    doctor.age = updateDoctor.age;
+    doctor.post = updateDoctor.post;
+    doctor.experience = updateDoctor.experience;
+    doctor.office = updateDoctor.office;
+    doctor.info = updateDoctor.info;
+    doctor.clinicid = updateDoctor.clinicid;
+    doctor.recordingid = updateDoctor.recordingid;
     await this.doctorRepository.save(doctor);
     return doctor;
   }

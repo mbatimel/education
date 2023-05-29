@@ -11,14 +11,11 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RecordService } from './record.service';
 import { Record } from './record.entity';
 import { CreateRecordDto } from './dto/RecordDTO';
-import { Roles } from 'src/Guard/role.decorator';
-import { Role } from 'src/Guard/role.enum';
 @Controller('records')
 @ApiTags('Записи')
 export class RecordController {
   constructor(private readonly recordService: RecordService) {}
   @Get()
-  @Roles(Role.Admin)
   findAll() {
     return this.recordService.findAll();
   }

@@ -5,12 +5,15 @@ import { ClinicModel } from './Clinic/clinic.model';
 import { ClientsModel } from './Client/client.model';
 import { RecordModel } from './Record/record.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './Guard/roles.guard';
+import { JwtAuthGuard } from './auth/local-auth.guard';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './Guard/user.model';
 
 @Module({
   imports: [
     DoctorModel,
+    AuthModule,
+    UserModule,
     ClinicModel,
     ClientsModel,
     RecordModel,
@@ -27,11 +30,6 @@ import { RolesGuard } from './Guard/roles.guard';
     }),
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  providers: [JwtAuthGuard],
 })
 export class AppModule {}

@@ -26,7 +26,7 @@ export class ClientsServise {
     });
   }
   async create(clientDTO: CreateClientDTO): Promise<Client> {
-    const client = this.clientRepository.create();
+    const client = await this.clientRepository.create();
     client.Fullname = clientDTO.Fullname;
     client.Birthday = clientDTO.Birthday;
     client.age = clientDTO.age;
