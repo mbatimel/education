@@ -15,6 +15,6 @@ export class CreateClientDTO {
   address: string;
   @ApiProperty({ example: 'школа 17', description: 'место работы/учебы' })
   workORstudy: string;
-  @ApiProperty({ example: '1', description: 'номер записи к врачу' })
+  @ApiProperty({ example: '[1]', description: 'номер записи к врачу' })
   recordingid: number[];
 }

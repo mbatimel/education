@@ -16,7 +16,7 @@ export class Doctor {
   id: number;
   @ApiProperty({ example: 'Иванов Иван Иванович', description: 'ФИО' })
   @Column()
-  fullname: string; //объект, в котором будем автоматически получать все статьи клиента
+  fullname: string;
   @ApiProperty({ example: '1', description: 'Возраст' })
   @Column()
   age: number;

@@ -4,6 +4,7 @@ import { Clinic } from '../Clinic/clinic.entity';
 import { Client } from '../Client/client.entity';
 import { Record } from '../Record/record.entity';
 import { IncompleteDoctorDto } from '../Doctor/dto/incomplete-doctor.dto';
+import { User } from 'src/Users/user.entity';
 
 @Injectable()
 export class DatasourceService {
@@ -11,6 +12,7 @@ export class DatasourceService {
   private clinic: Clinic[] = [];
   private client: Client[] = [];
   private record: Record[] = [];
+  private user: User[] = [];
   private indoctor: IncompleteDoctorDto[] = [];
 
   getDoctors(): Doctor[] {
@@ -18,6 +20,9 @@ export class DatasourceService {
   }
   getRecords(): Record[] {
     return this.record;
+  }
+  getUser(): User[] {
+    return this.user;
   }
   getClinics(): Clinic[] {
     return this.clinic;

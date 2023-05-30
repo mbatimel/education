@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RecordService } from './record.service';
 import { Record } from './record.entity';
 import { CreateRecordDto } from './dto/RecordDTO';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('records')
 @ApiTags('Записи')
 export class RecordController {
@@ -30,6 +32,7 @@ export class RecordController {
   }
   @ApiOperation({ summary: 'Добавить запись' })
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   create(@Body() CreateRecord: CreateRecordDto) {
     return this.recordService.create(CreateRecord);
   }

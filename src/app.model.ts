@@ -7,7 +7,7 @@ import { RecordModel } from './Record/record.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtAuthGuard } from './auth/local-auth.guard';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './Guard/user.model';
+import { UserModule } from './Users/user.model';
 
 @Module({
   imports: [

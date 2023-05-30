@@ -17,10 +17,10 @@ export class CreateDcotorDto {
   @ApiProperty({ example: '222', description: 'номер кабинета' })
   office: number;
   @ApiProperty({
-    example: '1',
+    example: '[1]',
     description: 'айди клиники в которой находится врач',
   })
   clinicid: number[];
-  @ApiProperty({ example: '1', description: 'номер записи к врачу' })
+  @ApiProperty({ example: '[1]', description: 'номер записи к врачу' })
   recordingid: number[];
 }

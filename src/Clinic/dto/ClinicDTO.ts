@@ -18,6 +18,6 @@ export class CreateClinicDTO {
     description: 'ФИО главврача',
   })
   HeadOf: string;
-  @ApiProperty({ example: '1', description: 'айди врача' })
+  @ApiProperty({ example: '[1]', description: 'айди врача' })
   docotorid: number[];
 }

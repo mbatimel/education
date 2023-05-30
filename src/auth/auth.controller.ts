@@ -6,7 +6,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { User } from '../Guard/user.entity';
+import { User } from '../Users/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './local-auth.guard';
 @Controller('auth')
