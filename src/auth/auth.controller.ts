@@ -6,11 +6,12 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '../Users/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './local-auth.guard';
 @Controller('auth')
+@ApiTags('Авторизация')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('login')
