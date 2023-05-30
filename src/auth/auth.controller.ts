@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   Post,
   UnauthorizedException,
   UseGuards,
@@ -13,7 +14,7 @@ import { JwtAuthGuard } from './local-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('login')
-  //@HttpCode(200)
+  @HttpCode(200)
   async login(@Body() user: User) {
     const result = await this.authService.login(user);
     if (!result) {

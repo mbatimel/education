@@ -7,9 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Client } from '../Client/client.entity';
 import { Doctor } from './doctor.entity';
 import { Record } from '../Record/record.entity';
+import { DoctorsControllerDTO } from './dto/doctor_dto.controller';
 
 @Module({
-  controllers: [DoctorsController],
+  controllers: [DoctorsController, DoctorsControllerDTO],
   providers: [DoctorsServise],
   imports: [
     DatasourceModule,

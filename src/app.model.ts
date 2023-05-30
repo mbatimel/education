@@ -5,7 +5,6 @@ import { ClinicModel } from './Clinic/clinic.model';
 import { ClientsModel } from './Client/client.model';
 import { RecordModel } from './Record/record.model';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtAuthGuard } from './auth/local-auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './Users/user.model';
 
@@ -30,6 +29,6 @@ import { UserModule } from './Users/user.model';
     }),
   ],
   controllers: [],
-  providers: [JwtAuthGuard],
+  providers: [],
 })
 export class AppModule {}

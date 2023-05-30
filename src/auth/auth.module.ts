@@ -10,12 +10,12 @@ import { UserModule } from '../Users/user.model';
   providers: [AuthService, JwtStrategy],
   imports: [
     UserModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '1d' },
     }),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  exports: [AuthService, JwtModule, PassportModule],
+  exports: [JwtModule, PassportModule],
 })
 export class AuthModule {}

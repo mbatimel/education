@@ -8,17 +8,19 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { RecordService } from './record.service';
 import { Record } from './record.entity';
 import { CreateRecordDto } from './dto/RecordDTO';
 import { AuthGuard } from '@nestjs/passport';
 @Controller('records')
 @ApiTags('Записи')
+@ApiSecurity('JWT-auth')
 export class RecordController {
   constructor(private readonly recordService: RecordService) {}
   @Get()
-  findAll() {
+  @UseGuards(AuthGuard('jwt'))
+  async findAll() {
     return this.recordService.findAll();
   }
   @ApiOperation({ summary: 'Поиск записи' })
@@ -27,6 +29,7 @@ export class RecordController {
     return this.recordService.findOne(+id);
   }
   @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateRecord: Record) {
     return this.recordService.update(+id, updateRecord);
   }
@@ -37,6 +40,7 @@ export class RecordController {
     return this.recordService.create(CreateRecord);
   }
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string) {
     return this.recordService.remove(+id);
   }

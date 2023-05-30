@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Initial1685393836172 implements MigrationInterface {
-  name = 'Initial1685393836172';
+export class Initial1685478367180 implements MigrationInterface {
+  name = 'Initial1685478367180';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -16,10 +16,13 @@ export class Initial1685393836172 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "doctor_clinic" RENAME CONSTRAINT "PK_1a5e20e1ab06c69aa46c8dd2245" TO "PK_9d26cc5ab300147e085bc0a2969"`,
     );
+    await queryRunner.query(
+      `CREATE TABLE "users" ("id" SERIAL NOT NULL, "username" character varying NOT NULL, "password" character varying NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`,
+    );
     await queryRunner.query(`ALTER TABLE "clinic" DROP COLUMN "doctorid"`);
+    await queryRunner.query(`ALTER TABLE "client" DROP COLUMN "recordingid"`);
     await queryRunner.query(`ALTER TABLE "doctors" DROP COLUMN "clinicid"`);
     await queryRunner.query(`ALTER TABLE "doctors" DROP COLUMN "recordingis"`);
-    await queryRunner.query(`ALTER TABLE "client" DROP COLUMN "recordingid"`);
     await queryRunner.query(
       `ALTER TABLE "doctor_clinic" DROP CONSTRAINT "PK_9d26cc5ab300147e085bc0a2969"`,
     );
@@ -60,18 +63,22 @@ export class Initial1685393836172 implements MigrationInterface {
       `ALTER TABLE "doctor_clinic" ADD CONSTRAINT "PK_9d26cc5ab300147e085bc0a2969" PRIMARY KEY ("doctor_id", "clinic_id")`,
     );
     await queryRunner.query(
-      `CREATE SEQUENCE IF NOT EXISTS "user_id_seq" OWNED BY "user"."id"`,
+      `ALTER TABLE "doctors" ALTER COLUMN "fullname" SET NOT NULL`,
     );
     await queryRunner.query(
-      `ALTER TABLE "user" ALTER COLUMN "id" SET DEFAULT nextval('"user_id_seq"')`,
+      `ALTER TABLE "doctors" ALTER COLUMN "age" SET NOT NULL`,
     );
-    await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "username"`);
     await queryRunner.query(
-      `ALTER TABLE "user" ADD "username" character varying NOT NULL`,
+      `ALTER TABLE "doctors" ALTER COLUMN "post" SET NOT NULL`,
     );
-    await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "password"`);
     await queryRunner.query(
-      `ALTER TABLE "user" ADD "password" character varying NOT NULL`,
+      `ALTER TABLE "doctors" ALTER COLUMN "experience" SET NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "office" SET NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "info" SET NOT NULL`,
     );
     await queryRunner.query(
       `CREATE INDEX "IDX_561e8d63b3d4d582b6f693c393" ON "doctor_clinic" ("clinic_id") `,
@@ -112,14 +119,24 @@ export class Initial1685393836172 implements MigrationInterface {
     await queryRunner.query(
       `DROP INDEX "public"."IDX_561e8d63b3d4d582b6f693c393"`,
     );
-    await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "password"`);
-    await queryRunner.query(`ALTER TABLE "user" ADD "password" text`);
-    await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "username"`);
-    await queryRunner.query(`ALTER TABLE "user" ADD "username" text`);
     await queryRunner.query(
-      `ALTER TABLE "user" ALTER COLUMN "id" DROP DEFAULT`,
+      `ALTER TABLE "doctors" ALTER COLUMN "info" DROP NOT NULL`,
     );
-    await queryRunner.query(`DROP SEQUENCE "user_id_seq"`);
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "office" DROP NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "experience" DROP NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "post" DROP NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "age" DROP NOT NULL`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "doctors" ALTER COLUMN "fullname" DROP NOT NULL`,
+    );
     await queryRunner.query(
       `ALTER TABLE "doctor_clinic" DROP CONSTRAINT "PK_9d26cc5ab300147e085bc0a2969"`,
     );
@@ -159,10 +176,11 @@ export class Initial1685393836172 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "doctor_clinic" ADD CONSTRAINT "PK_9d26cc5ab300147e085bc0a2969" PRIMARY KEY ("doctor_id", "clinic_id")`,
     );
-    await queryRunner.query(`ALTER TABLE "client" ADD "recordingid" integer`);
     await queryRunner.query(`ALTER TABLE "doctors" ADD "recordingis" integer`);
     await queryRunner.query(`ALTER TABLE "doctors" ADD "clinicid" integer`);
+    await queryRunner.query(`ALTER TABLE "client" ADD "recordingid" integer`);
     await queryRunner.query(`ALTER TABLE "clinic" ADD "doctorid" integer`);
+    await queryRunner.query(`DROP TABLE "users"`);
     await queryRunner.query(
       `ALTER TABLE "doctor_clinic" RENAME CONSTRAINT "PK_9d26cc5ab300147e085bc0a2969" TO "PK_1a5e20e1ab06c69aa46c8dd2245"`,
     );
