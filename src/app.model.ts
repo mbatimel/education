@@ -19,7 +19,7 @@ import { UserModule } from './Users/user.model';
     DatasourceModule,
     TypeOrmModule.forRoot({
       type: 'postgres', //тип подключаемой БД
-      port: 5432, //порт
+      port: 5433, //порт
       username: 'postgres', //имя пользователя
       password: 'tatarin17', //пароль
       host: 'localhost', //хост, в нашем случае БД развернута локально
